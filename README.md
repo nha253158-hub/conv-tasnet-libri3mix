@@ -44,7 +44,7 @@ Một mốc để tham chiếu: Conv-TasNet bản gốc tách **2** người (WS
 
 - **Thiết kế cấu hình model** Conv-TasNet (encoder 1-D / khối TCN / decoder) cho 3 nguồn ở 16 kHz.
 - **Viết vòng lặp huấn luyện từ đầu:** loss SI-SDR kết hợp Permutation-Invariant Training, Adam, `ReduceLROnPlateau`, gradient clipping, early stopping.
-- **Tự viết pipeline đánh giá độc lập:** dataset loader cho tập test Libri3Mix, tính 6 chỉ số có PIT, xuất CSV + biểu đồ phân phối + spectrogram + audio mẫu.
+- **Tự viết pipeline đánh giá độc lập:** dataset loader cho tập test Libri3Mix, tính 6 chỉ số có PIT, xuất CSV + biểu đồ phân phối + audio mẫu.
 - **Phân tích kết quả:** thống kê phân bố theo từng mức chất lượng và theo độ dài tín hiệu để hiểu model mạnh/yếu ở đâu.
 
 ## Vài quyết định kỹ thuật đáng chú ý
