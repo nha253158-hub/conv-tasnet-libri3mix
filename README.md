@@ -1,19 +1,14 @@
 # Conv-TasNet — Tách 3 giọng nói chồng lấn (Speech Separation)
 
-Tách một bản ghi âm có **3 người nói cùng lúc** thành 3 file giọng riêng biệt — bài toán *"cocktail party"* kinh điển của xử lý tiếng nói. Mình **tự xây và huấn luyện Conv-TasNet from scratch** (không dùng model pretrained), đạt **SI-SNRi 12,30 dB** trên 3000 mẫu test độc lập.
+Tách một bản ghi âm có **3 người nói cùng lúc** thành 3 file giọng riêng biệt — bài toán *"cocktail party"* kinh điển của xử lý tiếng nói. Mình **huấn luyện Conv-TasNet from scratch** (khởi tạo ngẫu nhiên, không dùng trọng số pretrained) dựa trên bản cài đặt kiến trúc của [Asteroid](https://github.com/asteroid-team/asteroid); toàn bộ pipeline huấn luyện và đánh giá là mình tự xây. Mô hình đạt **SI-SNRi 12,30 dB** trên 3000 mẫu test độc lập.
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue)
-![PyTorch](https://img.shields.io/badge/PyTorch-1.10+-ee4c2c)
-![Asteroid](https://img.shields.io/badge/Asteroid-toolkit-7B2FF7)
-![License](https://img.shields.io/badge/License-MIT-green)
+![Python](https://img.shields.io/badge/Python-3.8+-blue) ![PyTorch](https://img.shields.io/badge/PyTorch-1.10+-ee4c2c) ![Asteroid](https://img.shields.io/badge/Asteroid-toolkit-7B2FF7) ![License](https://img.shields.io/badge/License-MIT-green)
 
 **Tech stack:** Python · PyTorch · torchaudio · Asteroid · NumPy/Pandas · Matplotlib
 **Lĩnh vực:** Deep Learning · Xử lý tín hiệu tiếng nói · Tách nguồn mù (Blind Source Separation)
 
-<p align="center">
-  <img src="assets/comparison_bar.png" width="640"><br>
-  <em>Từ một bản trộn ≈ −3,4 dB, model tách ra 3 giọng đạt ≈ +8,9 dB SI-SNR (cải thiện hơn 12 dB).</em>
-</p>
+![So sánh trước và sau khi tách](assets/comparison_bar.png)
+*Từ một bản trộn ≈ −3,4 dB, model tách ra 3 giọng đạt ≈ +8,9 dB SI-SNR (cải thiện hơn 12 dB).*
 
 ## Điểm nổi bật
 
@@ -27,23 +22,21 @@ Tách một bản ghi âm có **3 người nói cùng lúc** thành 3 file giọ
 
 Đánh giá trên **Libri3Mix `sep_clean`, `wav16k/min/test`** — 3000 file, mỗi file 3 người nói. Các chỉ số tính theo hoán vị bất biến (PIT) qua `asteroid.metrics.get_metrics`.
 
-| Chỉ số        | Mean   | Std   |
-| ------------- | :----: | :---: |
-| SI-SNR (dB)   | 8,93   | 2,71  |
+| Chỉ số           | Mean      | Std  |
+| ---------------- | --------- | ---- |
+| SI-SNR (dB)      | 8,93      | 2,71 |
 | **SI-SNRi (dB)** | **12,30** | 2,73 |
-| SDR (dB)      | 9,55   | 2,62  |
-| **SDRi (dB)** | **12,77** | 2,65 |
-| PESQ          | 1,54   | 0,17  |
-| STOI          | 0,85   | 0,05  |
+| SDR (dB)         | 9,55      | 2,62 |
+| **SDRi (dB)**    | **12,77** | 2,65 |
+| PESQ             | 1,54      | 0,17 |
+| STOI             | 0,85      | 0,05 |
 
 SI-SNRi (mức cải thiện so với đầu vào) là chỉ số chính. Xét phân bố: ~73% số mẫu đạt 10–15 dB, hơn 10% trên 15 dB, chỉ ~2,6% dưới 5 dB (rơi vào các đoạn mà các giọng quá giống nhau về cao độ).
 
 Một mốc để tham chiếu: Conv-TasNet bản gốc tách **2** người (WSJ0-2mix) đạt ~15 dB SI-SNRi. Bài toán **3** người ở đây khó hơn nhiều, nên 12,30 dB là kết quả tốt cho kiến trúc và tác vụ này.
 
-<p align="center">
-  <img src="assets/waveform_visualization.png" width="640"><br>
-  <em>Hàng trên: bản trộn đầu vào. Giữa: 3 giọng gốc. Dưới: 3 giọng model tách ra.</em>
-</p>
+![Dạng sóng trước và sau khi tách](assets/waveform_visualization.png)
+*Hàng trên: bản trộn đầu vào. Giữa: 3 giọng gốc. Dưới: 3 giọng model tách ra.*
 
 ## Mình đã làm gì
 
@@ -65,14 +58,14 @@ Một mốc để tham chiếu: Conv-TasNet bản gốc tách **2** người (WS
 
 Conv-TasNet làm việc thẳng trên miền thời gian: encoder 1-D học cách biểu diễn tín hiệu, khối TCN ước lượng mặt nạ cho từng nguồn, decoder dựng lại từng giọng. Dùng bản cài đặt trong [Asteroid](https://github.com/asteroid-team/asteroid).
 
-| Tham số | Giá trị |   | Huấn luyện | Giá trị |
-| ------- | :-----: | - | ---------- | :-----: |
-| `n_src` | 3       |   | Optimizer  | Adam (lr 1e-3) |
-| Sample rate | 16 kHz |  | Loss       | SI-SDR + PIT |
-| `n_filters` | 512  |   | Scheduler  | ReduceLROnPlateau |
-| kernel / stride | 32 / 16 | | Grad clip | max-norm 5.0 |
-| `bn_chan` / `hid_chan` / `skip_chan` | 128 / 512 / 128 | | Segment | 3 giây, batch 4 |
-| `n_blocks` × `n_repeats` | 8 × 3 | | Epoch | tối đa 200 |
+| Tham số                              | Giá trị         |     | Huấn luyện | Giá trị           |
+| ------------------------------------ | --------------- | --- | ---------- | ----------------- |
+| `n_src`                              | 3               |     | Optimizer  | Adam (lr 1e-3)    |
+| Sample rate                          | 16 kHz          |     | Loss       | SI-SDR + PIT      |
+| `n_filters`                          | 512             |     | Scheduler  | ReduceLROnPlateau |
+| kernel / stride                      | 32 / 16         |     | Grad clip  | max-norm 5.0      |
+| `bn_chan` / `hid_chan` / `skip_chan` | 128 / 512 / 128 |     | Segment    | 3 giây, batch 4   |
+| `n_blocks` × `n_repeats`             | 8 × 3           |     | Epoch      | tối đa 200        |
 
 Val loss thấp nhất là **−9,30 dB**, đạt quanh epoch 191; sau ~epoch 150 thì gần như đi ngang (đã hội tụ).
 
@@ -119,12 +112,12 @@ for i in range(3):
 
 ## Notebook & demo
 
-| | Mô tả | Link |
-| - | ----- | ---- |
-| Train | Conv-TasNet trên Libri3Mix sep_clean (200 epoch) | [Kaggle](<link-notebook-train>) |
-| Đánh giá | 6 chỉ số + biểu đồ trên 3000 file | [Kaggle](<link-notebook-eval>) |
+|          | Mô tả                                             | Notebook                                                           |
+| -------- | ------------------------------------------------- | ----------------------------------------------------------------- |
+| Train    | Conv-TasNet trên Libri3Mix sep_clean (200 epoch)  | [`train_conv_tasnet.ipynb`](notebooks/train_conv_tasnet.ipynb)       |
+| Đánh giá | 6 chỉ số + biểu đồ trên 3000 file                 | [`evaluate_conv_tasnet.ipynb`](notebooks/evaluate_conv_tasnet.ipynb) |
 
-Checkpoint được host thành Kaggle Dataset và gắn sẵn vào notebook đánh giá, nên chạy được end-to-end mà không cần train lại.
+GitHub render trực tiếp `.ipynb` nên có thể xem code và kết quả ngay trên trình duyệt. Checkpoint được host thành Kaggle Dataset và gắn sẵn vào notebook đánh giá, nên chạy lại được end-to-end mà không cần train lại.
 
 ## Tham khảo
 
