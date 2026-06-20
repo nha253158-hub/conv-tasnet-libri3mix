@@ -53,14 +53,7 @@ Conv-TasNet làm việc thẳng trên miền thời gian: encoder 1-D học các
 | `n_blocks` × `n_repeats`             | 8 × 3           |     | Epoch      | tối đa 200        |
 
 Val loss thấp nhất là **−9,30 dB**, đạt quanh epoch 191; sau ~epoch 150 thì gần như đi ngang (đã hội tụ).
-
-## Cài đặt & chạy
-
-```bash
-git clone https://github.com/nha253158-hub/conv-tasnet-libri3mix.git
-cd conv-tasnet-libri3mix
-pip install -r requirements.txt
-```
+## Bộ dữ liệu
 
 Dữ liệu **Libri3Mix** (16 kHz, mode `min`, task `sep_clean`) sinh bằng repo gốc [LibriMix](https://github.com/JorisCos/LibriMix). Mỗi split chỉ cần bản trộn `mix_clean` và 3 nguồn `s1`/`s2`/`s3`:
 
