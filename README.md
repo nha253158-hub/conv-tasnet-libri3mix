@@ -78,7 +78,7 @@ Libri3Mix/wav16k/min/
 - Model chạy offline, chưa real-time. Có thể thử biến thể causal cho ứng dụng thời gian thực.
 - Hướng tiếp theo: thử các kiến trúc mới hơn (DPRNN, SepFormer), bổ sung dữ liệu có nhiễu/vọng thực tế, và tăng quy mô model.
 
-## Notebook & demo
+## Notebook 
 
 |          | Mô tả                                             | Notebook                                                           |
 | -------- | ------------------------------------------------- | ----------------------------------------------------------------- |
@@ -87,9 +87,9 @@ Libri3Mix/wav16k/min/
 
 ## Thử trực tiếp
 
-[![Demo](https://img.shields.io/badge/🤗-Thử%20model%20trực%20tiếp-blue)](https://huggingface.co/spaces/ThuHa26012005/demo-seperation)
+[![Demo](https://img.shields.io/badge/🤗-Thử%20model%20trực%20tiếp-blue)](https://huggingface.co/spaces/ThuHa26012005/demo-separation)
 
-Tải lên đoạn ghi 3 người nói chồng lấn (tần số 16k HZ), model tách ra 3 giọng riêng — nghe ngay trên trình duyệt, không cần cài gì.
+Tải lên đoạn ghi 3 người nói chồng lấn (tần số 16 kHZ), model tách ra 3 giọng riêng — nghe ngay trên trình duyệt, không cần cài gì.
 
 ## Tham khảo
 
