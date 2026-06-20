@@ -89,7 +89,7 @@ Libri3Mix/wav16k/min/
 
 [![Demo](https://img.shields.io/badge/🤗-Thử%20model%20trực%20tiếp-blue)](https://huggingface.co/spaces/ThuHa26012005/demo-seperation)
 
-Tải lên đoạn ghi 3 người nói chồng lấn, model tách ra 3 giọng riêng — nghe ngay trên trình duyệt, không cần cài gì.
+Tải lên đoạn ghi 3 người nói chồng lấn (tần số 16k HZ), model tách ra 3 giọng riêng — nghe ngay trên trình duyệt, không cần cài gì.
 
 ## Tham khảo
 
