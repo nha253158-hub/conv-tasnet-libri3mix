@@ -47,12 +47,6 @@ Một mốc để tham chiếu: Conv-TasNet bản gốc tách **2** người (WS
 - **Tự viết pipeline đánh giá độc lập:** dataset loader cho tập test Libri3Mix, tính 6 chỉ số có PIT, xuất CSV + biểu đồ phân phối + audio mẫu.
 - **Phân tích kết quả:** thống kê phân bố theo từng mức chất lượng và theo độ dài tín hiệu để hiểu model mạnh/yếu ở đâu.
 
-## Vài quyết định kỹ thuật đáng chú ý
-
-- **Permutation-Invariant Training (PIT).** Model xuất 3 nguồn theo thứ tự bất kỳ, không cố định nguồn nào là s1/s2/s3. Cả loss lúc train lẫn lúc đo đều phải ghép cặp theo hoán vị tối ưu — bỏ qua bước này là số liệu sai hoàn toàn.
-- **Huấn luyện nối tiếp qua nhiều phiên.** Train trên Kaggle mà mỗi phiên giới hạn 12 tiếng, nên mình lưu checkpoint mỗi epoch gồm cả optimizer + scheduler + lịch sử loss. Hết giờ thì nạp lại đúng trạng thái và train tiếp, không mất tiến độ.
-- **Xử lý state dict của DataParallel.** Train đa GPU khiến key bị thêm tiền tố `module.`; mình strip prefix khi load để checkpoint tái sử dụng được ở mọi nơi (1 GPU hoặc CPU).
-- **Tách biệt train và eval.** Phần đánh giá là notebook riêng, chỉ load checkpoint rồi chạy độc lập trên tập test — đảm bảo số liệu trong báo cáo là khách quan và reproduce được.
 
 ## Kiến trúc & cấu hình
 
