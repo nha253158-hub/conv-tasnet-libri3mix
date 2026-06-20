@@ -83,11 +83,9 @@ Libri3Mix/wav16k/min/
 
 ## Thử trực tiếp
 
-[![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-md.svg)](https://huggingface.co/spaces/ThuHa26012005/demo-separation)
+Tải lên đoạn ghi 3 người nói chồng lấn (16 kHz), model tách ra 3 giọng riêng.
 
-Tải lên đoạn ghi 3 người nói chồng lấn (16 kHz), model tách ra 3 giọng riêng — nghe ngay trên trình duyệt, không cần cài gì.
-
-> **Mở thẳng app:** https://thuha26012005-demo-separation.hf.space
+> **Mở app:** https://thuha26012005-demo-separation.hf.space
 > Space chạy free nên có thể cần ~1 phút để khởi động nếu đang ở chế độ sleep.
 ## Hạn chế & hướng phát triển
 
