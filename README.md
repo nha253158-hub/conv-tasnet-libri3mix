@@ -72,11 +72,7 @@ Libri3Mix/wav16k/min/
 
 
 
-## Hạn chế & hướng phát triển
 
-- Ở các đoạn mà các giọng quá giống nhau (cùng giới, cao độ gần) vẫn còn xuyên âm — PESQ ~1,5 phản ánh điều này.
-- Model chạy offline, chưa real-time. Có thể thử biến thể causal cho ứng dụng thời gian thực.
-- Hướng tiếp theo: thử các kiến trúc mới hơn (DPRNN, SepFormer), bổ sung dữ liệu có nhiễu/vọng thực tế, và tăng quy mô model.
 
 ## Notebook 
 
@@ -89,7 +85,15 @@ Libri3Mix/wav16k/min/
 
 [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/resolve/main/open-in-hf-spaces-md.svg)](https://huggingface.co/spaces/ThuHa26012005/demo-separation)
 
-Tải lên đoạn ghi 3 người nói chồng lấn (tần số 16 kHz), model tách ra 3 giọng riêng — nghe ngay trên trình duyệt, không cần cài gì.
+Tải lên đoạn ghi 3 người nói chồng lấn (16 kHz), model tách ra 3 giọng riêng — nghe ngay trên trình duyệt, không cần cài gì.
+
+> **Mở thẳng app:** https://thuha26012005-demo-separation.hf.space
+> Space chạy free nên có thể cần ~1 phút để khởi động nếu đang ở chế độ sleep.
+## Hạn chế & hướng phát triển
+
+- Ở các đoạn mà các giọng quá giống nhau (cùng giới, cao độ gần) vẫn còn xuyên âm — PESQ ~1,5 phản ánh điều này.
+- Model chạy offline, chưa real-time. Có thể thử biến thể causal cho ứng dụng thời gian thực.
+- Hướng tiếp theo: thử các kiến trúc mới hơn (DPRNN, SepFormer), bổ sung dữ liệu có nhiễu/vọng thực tế, và tăng quy mô model.
 
 ## Tham khảo
 
