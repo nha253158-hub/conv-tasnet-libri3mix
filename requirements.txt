@@ -1,0 +1,18 @@
+# Core
+torch>=1.10
+torchaudio>=0.10
+asteroid>=0.6.0
+
+# Metrics
+pesq
+pystoi
+mir_eval
+
+# Audio I/O & data
+soundfile
+numpy
+pandas
+
+# Plotting & utils
+matplotlib
+tqdm
