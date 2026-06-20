@@ -71,32 +71,11 @@ cd conv-tasnet-libri3mix
 pip install -r requirements.txt
 ```
 
-Dữ liệu **Libri3Mix** (16 kHz, mode `min`, task `sep_clean`) sinh bằng repo gốc [LibriMix](https://github.com/JorisCos/LibriMix). Thư mục test có dạng `test/{mix_clean, s1, s2, s3}/`.
+Dữ liệu Libri3Mix (16 kHz, mode min, task sep_clean) sinh bằng repo gốc LibriMix, gồm các thư mục train/dev/test (mỗi thư mục chứa mix_clean, s1, s2, s3) kèm các file metadata CSV. Notebook train nạp dữ liệu qua file CSV (tham số csv_dir); notebook đánh giá đọc thẳng thư mục test dạng test/{mix_clean, s1, s2, s3}/ (tham số LIBRI3MIX_TEST_DIR) — nên chỉ thư mục test cần ghi rõ cấu trúc.
 
-- **Train:** mở `notebooks/train_conv_tasnet.ipynb`, sửa `csv_dir`, chạy hết. Code tự lưu/khôi phục checkpoint nên train nối tiếp được.
-- **Đánh giá:** mở `notebooks/evaluate_conv_tasnet.ipynb`, sửa `CHECKPOINT_PATH` + `LIBRI3MIX_TEST_DIR`, chạy hết để ra bảng số liệu và hình. Đặt `MAX_SAMPLES=100` để test nhanh.
 
-Tách thử một file bất kỳ (16 kHz):
-
-```python
-import torch, torchaudio
-from asteroid.models import ConvTasNet
-
-model = ConvTasNet(n_src=3, sample_rate=16000, kernel_size=32, n_filters=512,
-                   stride=16, bn_chan=128, hid_chan=512, skip_chan=128,
-                   n_blocks=8, n_repeats=3, mask_act="relu")
-
-ckpt = torch.load("last_checkpoint.pth", map_location="cpu")
-state = ckpt.get("model_state_dict", ckpt)
-state = {k.replace("module.", "", 1): v for k, v in state.items()}  # bỏ prefix DataParallel
-model.load_state_dict(state); model.eval()
-
-mix, sr = torchaudio.load("mixture.wav")
-with torch.no_grad():
-    est = model(mix.unsqueeze(0)).squeeze(0)   # (3, T)
-for i in range(3):
-    torchaudio.save(f"estimated_s{i+1}.wav", est[i:i+1], 16000)
-```
+Train: mở notebooks/train_conv_tasnet.ipynb, sửa csv_dir, chạy hết. Code tự lưu/khôi phục checkpoint nên train nối tiếp được.
+Đánh giá: mở notebooks/evaluate_conv_tasnet.ipynb, sửa CHECKPOINT_PATH + LIBRI3MIX_TEST_DIR, chạy hết để ra bảng số liệu và hình. Đặt MAX_SAMPLES=100 để test nhanh.
 
 ## Hạn chế & hướng phát triển
 
