@@ -62,7 +62,22 @@ cd conv-tasnet-libri3mix
 pip install -r requirements.txt
 ```
 
-Dữ liệu **Libri3Mix** (16 kHz, mode `min`, task `sep_clean`) sinh bằng repo gốc [LibriMix](https://github.com/JorisCos/LibriMix), gồm các thư mục `train`/`dev`/`test` (mỗi thư mục chứa `mix_clean`, `s1`, `s2`, `s3`) kèm các file metadata CSV. Notebook **train** nạp dữ liệu qua file CSV (tham số `csv_dir`); notebook **đánh giá** đọc thẳng thư mục test dạng `test/{mix_clean, s1, s2, s3}/` (tham số `LIBRI3MIX_TEST_DIR`) — nên chỉ thư mục test cần ghi rõ cấu trúc.
+Dữ liệu **Libri3Mix** (16 kHz, mode `min`, task `sep_clean`) sinh bằng repo gốc [LibriMix](https://github.com/JorisCos/LibriMix). Mỗi split chỉ cần bản trộn `mix_clean` và 3 nguồn `s1`/`s2`/`s3`:
+
+````
+Libri3Mix/wav16k/min/
+├── train-360/                  # tập huấn luyện (360h)
+│   └── mix_clean/ s1/ s2/ s3/
+├── dev/                        # tập validation
+│   └── mix_clean/ s1/ s2/ s3/
+├── test/                       # tập kiểm tra
+│   └── mix_clean/ s1/ s2/ s3/
+└── metadata/
+    ├── mixture_train_mix_clean.csv
+    └── mixture_dev_mix_clean.csv
+````
+
+
 
 ## Hạn chế & hướng phát triển
 
