@@ -71,11 +71,7 @@ cd conv-tasnet-libri3mix
 pip install -r requirements.txt
 ```
 
-Dữ liệu Libri3Mix (16 kHz, mode min, task sep_clean) sinh bằng repo gốc LibriMix, gồm các thư mục train/dev/test (mỗi thư mục chứa mix_clean, s1, s2, s3) kèm các file metadata CSV. Notebook train nạp dữ liệu qua file CSV (tham số csv_dir); notebook đánh giá đọc thẳng thư mục test dạng test/{mix_clean, s1, s2, s3}/ (tham số LIBRI3MIX_TEST_DIR) — nên chỉ thư mục test cần ghi rõ cấu trúc.
-
-
-Train: mở notebooks/train_conv_tasnet.ipynb, sửa csv_dir, chạy hết. Code tự lưu/khôi phục checkpoint nên train nối tiếp được.
-Đánh giá: mở notebooks/evaluate_conv_tasnet.ipynb, sửa CHECKPOINT_PATH + LIBRI3MIX_TEST_DIR, chạy hết để ra bảng số liệu và hình. Đặt MAX_SAMPLES=100 để test nhanh.
+Dữ liệu **Libri3Mix** (16 kHz, mode `min`, task `sep_clean`) sinh bằng repo gốc [LibriMix](https://github.com/JorisCos/LibriMix), gồm các thư mục `train`/`dev`/`test` (mỗi thư mục chứa `mix_clean`, `s1`, `s2`, `s3`) kèm các file metadata CSV. Notebook **train** nạp dữ liệu qua file CSV (tham số `csv_dir`); notebook **đánh giá** đọc thẳng thư mục test dạng `test/{mix_clean, s1, s2, s3}/` (tham số `LIBRI3MIX_TEST_DIR`) — nên chỉ thư mục test cần ghi rõ cấu trúc.
 
 ## Hạn chế & hướng phát triển
 
