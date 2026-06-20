@@ -85,7 +85,11 @@ Libri3Mix/wav16k/min/
 | Train    | Conv-TasNet trên Libri3Mix sep_clean (200 epoch)  | [`train_conv_tasnet.ipynb`](notebooks/train_conv_tasnet.ipynb)       |
 | Đánh giá | 6 chỉ số + biểu đồ trên 3000 file                 | [`evaluate_conv_tasnet.ipynb`](notebooks/evaluate_conv_tasnet.ipynb) |
 
-GitHub render trực tiếp `.ipynb` nên có thể xem code và kết quả ngay trên trình duyệt. Checkpoint được host thành Kaggle Dataset và gắn sẵn vào notebook đánh giá, nên chạy lại được end-to-end mà không cần train lại.
+## Thử trực tiếp
+
+[![Demo](https://img.shields.io/badge/🤗-Thử%20model%20trực%20tiếp-blue)](https://huggingface.co/spaces/ThuHa26012005/demo-seperation)
+
+Tải lên đoạn ghi 3 người nói chồng lấn, model tách ra 3 giọng riêng — nghe ngay trên trình duyệt, không cần cài gì.
 
 ## Tham khảo
 
