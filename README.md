@@ -39,21 +39,7 @@ Một mốc để tham chiếu: Conv-TasNet bản gốc tách **2** người (WS
 *Hàng trên: bản trộn đầu vào. Giữa: 3 giọng gốc. Dưới: 3 giọng model tách ra.*
 
 
-## Kiến trúc & cấu hình
-
-Conv-TasNet làm việc thẳng trên miền thời gian: encoder 1-D học cách biểu diễn tín hiệu, khối TCN ước lượng mặt nạ cho từng nguồn, decoder dựng lại từng giọng. Dùng bản cài đặt trong [Asteroid](https://github.com/asteroid-team/asteroid).
-
-| Tham số                              | Giá trị         |     | Huấn luyện | Giá trị           |
-| ------------------------------------ | --------------- | --- | ---------- | ----------------- |
-| `n_src`                              | 3               |     | Optimizer  | Adam (lr 1e-3)    |
-| Sample rate                          | 16 kHz          |     | Loss       | SI-SDR + PIT      |
-| `n_filters`                          | 512             |     | Scheduler  | ReduceLROnPlateau |
-| kernel / stride                      | 32 / 16         |     | Grad clip  | max-norm 5.0      |
-| `bn_chan` / `hid_chan` / `skip_chan` | 128 / 512 / 128 |     | Segment    | 3 giây, batch 4   |
-| `n_blocks` × `n_repeats`             | 8 × 3           |     | Epoch      | tối đa 200        |
-
-Val loss thấp nhất là **−9,30 dB**, đạt quanh epoch 191; sau ~epoch 150 thì gần như đi ngang (đã hội tụ).
-## Bộ dữ liệu
+## Dataset
 
 Dữ liệu **Libri3Mix** (16 kHz, mode `min`, task `sep_clean`) sinh bằng repo gốc [LibriMix](https://github.com/JorisCos/LibriMix). Mỗi split chỉ cần bản trộn `mix_clean` và 3 nguồn `s1`/`s2`/`s3`:
 
@@ -81,17 +67,12 @@ Libri3Mix/wav16k/min/
 | Train    | Conv-TasNet trên Libri3Mix sep_clean (200 epoch)  | [`train_conv_tasnet.ipynb`](notebooks/train_conv_tasnet.ipynb)       |
 | Đánh giá | 6 chỉ số + biểu đồ trên 3000 file                 | [`evaluate_conv_tasnet.ipynb`](notebooks/evaluate_conv_tasnet.ipynb) |
 
-## Thử trực tiếp
+## Demo directly
 
 Tải lên đoạn ghi 3 người nói chồng lấn (16 kHz), model tách ra 3 giọng riêng.
 
 > **Mở app:** https://thuha26012005-demo-separation.hf.space
 > Space chạy free nên có thể cần ~1 phút để khởi động nếu đang ở chế độ sleep.
-## Hạn chế & hướng phát triển
-
-- Ở các đoạn mà các giọng quá giống nhau (cùng giới, cao độ gần) vẫn còn xuyên âm — PESQ ~1,5 phản ánh điều này.
-- Model chạy offline, chưa real-time. Có thể thử biến thể causal cho ứng dụng thời gian thực.
-- Hướng tiếp theo: thử các kiến trúc mới hơn (DPRNN, SepFormer), bổ sung dữ liệu có nhiễu/vọng thực tế, và tăng quy mô model.
 
 ## Tham khảo
 
