@@ -1,4 +1,4 @@
-# Conv-TasNet - Tách 3 giọng nói chồng lấn (Speech Separation)
+# Conv-TasNet - Speech Separation
 
 Tách một bản ghi âm có **3 người nói cùng lúc** thành 3 file giọng riêng biệt — bài toán *"cocktail party"* kinh điển của xử lý tiếng nói. Mình **huấn luyện Conv-TasNet from scratch** (khởi tạo ngẫu nhiên, không dùng trọng số pretrained) dựa trên bản cài đặt kiến trúc của [Asteroid](https://github.com/asteroid-team/asteroid); toàn bộ pipeline huấn luyện và đánh giá là mình tự xây. Mô hình đạt **SI-SNRi 12,30 dB** trên 3000 mẫu test độc lập.
 
